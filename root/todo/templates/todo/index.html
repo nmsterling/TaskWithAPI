@@ -1,0 +1,47 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'todo/styles.css' %}">
+        <title>Todo App</title>
+    </head>
+    <body>
+        <div id="todoApp">
+            <h1>[[ message ]]</h1>
+            <input v-model="newTodo" placeholder="Enter Todo" v-on:keyup.enter="addTodo"/>
+            <button @click.prevent="addTodo">Add</button>
+            <h3>My Todo Tasks:</h3>
+            <table class="center">
+                <tr v-for="todo in notCompleted">
+                    <td>
+                        <input v-model="edited"
+                             contenteditable="true"
+                             v-on:keydown.enter="editTodo(todo.id)"
+                             v-on:blur="editTodo(todo.id)"/>[[ todo.task ]]</input>
+                    <td>
+                        <input type="checkbox" @click="complete(todo.id)">
+                    </td>
+                </tr>
+            </table>
+            <h4>Completed Tasks:</h4>
+            <table class="center">
+                <tr v-for="todo in completed">
+
+                    <td id="completed"> [[ todo.task ]] </td>
+                    <td>
+                        <button type="button" @click="undoComplete(todo.id)">Undo</button>
+                        <button type="button" @click="deleteTodo(todo.id)">X</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </body>
+    <script src="{% static 'todo/index.js' %}"></script>
+</html>
